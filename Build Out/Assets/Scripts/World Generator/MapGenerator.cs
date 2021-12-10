@@ -10,13 +10,31 @@ public class MapGenerator : MonoBehaviour
     public static int seed;
     public static bool useRandomSeed = false;
 
+    public int size = 256;
+    public float scale = 20f;
+    public int offsetX = 0;
+    public int offsetY = 0;
+    public int seed;
+
+    public float[,] map;
+
+    public int octaves = 3;
+    public float persistance = 0.5f;
+    public float lacunarity = 0.5f;
+
 
     private void Start() {
         if(useRandomSeed) {
             seed = Random.Range(0, int.MaxValue);
         }
-        
+        PerlinNoise noise = new PerlinNoise(size, scale, offsetX, offsetY, seed);
+
+        //
+
+
     }
+
+    Color CalculateColor(int )
     
 
 

@@ -29,12 +29,13 @@ public class MapGenerator : MonoBehaviour
         }
         PerlinNoise noise = new PerlinNoise(size, scale, offsetX, offsetY, seed);
 
-        //
+        //generate texture from noise map
+        
+
 
 
     }
 
-    Color CalculateColor(int )
     
 
 

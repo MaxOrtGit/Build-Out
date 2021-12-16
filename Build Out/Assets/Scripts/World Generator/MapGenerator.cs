@@ -14,7 +14,6 @@ public class MapGenerator : MonoBehaviour
     public float scale = 20f;
     public int offsetX = 0;
     public int offsetY = 0;
-    public int seed;
 
     public float[,] map;
 
@@ -22,19 +21,43 @@ public class MapGenerator : MonoBehaviour
     public float persistance = 0.5f;
     public float lacunarity = 0.5f;
 
+    public Renderer textureRender;
+
 
     private void Start() {
-        if(useRandomSeed) {
-            seed = Random.Range(0, int.MaxValue);
-        }
-        PerlinNoise noise = new PerlinNoise(size, scale, offsetX, offsetY, seed);
 
-        //generate texture from noise map
+        float[,] noiseMap = PerlinNoise.Generate(size, scale);
+        DrawNoiseMap(noiseMap);
         
 
 
-
     }
+
+
+    public void DrawNoiseMap(float[,] noiseMap){
+        int width = noiseMap.GetLength(0);
+        int height = noiseMap.GetLength(1);
+
+        Texture2D texture = new Texture2D(width, height);
+
+        Color[] colorMap = new Color[width * height];
+        for(int y = 0; y < height; y++)
+        {
+            for(int x = 0; x < width; x++)
+            {
+                colorMap[y * width + x] = Color.Lerp(Color.black, Color.white, noiseMap[x, y]);
+            }
+        }
+        texture.SetPixels(colorMap);
+        texture.Apply();
+
+        textureRender.sharedMaterial.mainTexture = texture;
+        textureRender.transform.localScale = new Vector3(width, 1, height);
+
+        
+    }
+
+    
 
     
 
